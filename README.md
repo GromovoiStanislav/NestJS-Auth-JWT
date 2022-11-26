@@ -1,8 +1,8 @@
 ## NestJS API Authentication using JWT ant TypeORM with MySQL
 
-```bash
-- jwt
-- bcrypt
-- TypeORM
-- MySQL
+```
+* @nestjs/jwt or jsonwebtoken
+* bcrypt
+* TypeORM
+* MySQL
 ```

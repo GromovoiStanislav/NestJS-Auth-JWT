@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import * as bcrypt from 'bcrypt';
+//import * as jwt from 'jsonwebtoken';
 import { JwtService } from '@nestjs/jwt';
 import { Response, Request } from 'express';
 
@@ -55,9 +56,10 @@ export class AppController {
       throw new BadRequestException('invalid credentials');
     }
 
-    const jwt = await this.jwtService.signAsync({ id: user.id });
+    const token = await this.jwtService.signAsync({ id: user.id });
+    //const token = jwt.sign({ id: user.id }, 'secret', { expiresIn: '1h' });
 
-    response.cookie('jwt', jwt, { httpOnly: true });
+    response.cookie('jwt', token, { httpOnly: true });
 
     return {
       message: 'success',
@@ -70,6 +72,7 @@ export class AppController {
       const cookie = request.cookies['jwt'];
 
       const data = await this.jwtService.verifyAsync(cookie);
+      //const data = jwt.verify(cookie, 'secret');
 
       if (!data) {
         throw new UnauthorizedException();
